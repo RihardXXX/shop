@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog', # прописываем наше новое приложение в джанго
+    'mptt', # приложение библиотека для построения бинарного дерева в django
 ]
 
 # штука ,которая срабатывает после запроса
