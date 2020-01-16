@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
@@ -10,12 +12,22 @@ class HomeVew(View):
 
     def get(self, request):
         """Описываем что будет делать метод get"""
-        post_list = Post.objects.all()
-        return render(request, 'blog/home.html', {"posts": post_list})
+        category_list = Category.objects.all()
+        post_list = Post.objects.filter(published_date__lte=datetime.now(),published=True)
+        return render(request, 'blog/post_list.html', {"posts": post_list, "categories": category_list})
 
     def post(self, request):
         """описываем что будет делать метод post"""
         pass
+
+
+class PostDetailView(View):
+    """Класс открывающий всю статью"""
+    def get(self, request, category, slug):
+        """Описываем что будет делать метод get"""
+        category_list = Category.objects.all()
+        post = Post.objects.get(slug=slug)
+        return render(request, 'blog/post_detail.html', {"post": post, "categories": category_list})
 
 
 class CategoryView(View):

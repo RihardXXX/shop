@@ -5,6 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-    {{category}}
+    {% for category in categories %}
+    <p><a href="{% url 'category' category.slug %}">{{category.name}}</a></p>
+    <hr>
+    {% endfor %}
+    <hr size="10" color="black">
+    {% for post in posts %}
+    <h2><a href="{{ post.get_absolute_url }}">{{post.title}}</a></h2>
+    <p>{{post.mini_text}}</p>
+    <small>{{post.published_date}}</small>
+    <hr>
+    {% endfor %}
 </body>
 </html>

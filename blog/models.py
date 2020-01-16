@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from mptt.models import MPTTModel # библиотека для работы с подкатегориями
 from mptt.fields import TreeForeignKey
+from django.urls import reverse
 """
         Тут описывается, как должны выглядеть наши таблицы в базе данных
         ====================================================================
@@ -86,11 +87,14 @@ class Post(models.Model):
     sort = models.PositiveIntegerField(verbose_name="порядок", default=0)
 
     def __str__(self):
-        return self
+        return "{}".format(self.title)
+
+    def get_absolute_url(self):
+        return reverse('detail_post', kwargs={'category': self.category.slug, 'slug': self.slug})
 
     class Meta:
-        verbose_name = 'Пост'
-        verbose_name_plural = 'Посты'
+        verbose_name = 'новость'
+        verbose_name_plural = 'новости'
 
 
 class Comment(models.Model):

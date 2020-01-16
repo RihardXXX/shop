@@ -6,17 +6,14 @@
 </head>
 <body>
     {% for category in categories %}
-    <p><a href="#">{{category.name}}</a></p>
+    <p><a href="{% url 'category' category.slug %}">{{category.name}}</a></p>
     <hr>
     {% endfor %}
-    <hr size="10">
-    {% for post in posts %}
-    <p>{{post.title}}</p>
+    <hr size="10" color="black">
+
+    <h2>{{post.title}}</h2>
     <p>{{post.mini_text}}</p>
-    <p>{{post.text}}</p>
-    <p>{{post.created_date}}</p>
-    <hr>
-    {% endfor %}
+    <small>{{post.published_date}}</small>
 
 </body>
 </html>
