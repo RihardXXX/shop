@@ -13,7 +13,21 @@
 
     <h2>{{post.title}}</h2>
     <p>{{post.mini_text}}</p>
-    <small>{{post.published_date}}</small>
+    <p>Категория - {{ post.category }}</p>
+    {# теги - {% for tag in post.get_tags %} #}
+    теги - {% for tag in post.tags.all %}
+           {{ tag.name }},
+           {% endfor %}
+        <br>
+    <hr size="3" color="gray">
+    <small>Автор: {{ post.author }} - {{post.published_date}}</small>
 
+    <h4>Комментарии</h4>
+                  {% for comment in comments %}
+    Пользователь: {{ comment.author }}<br>
+                  <hr>
+                  {{ comment.text }}<br>
+    добавлен:     {{ comment.created_date }}
+                  {% endfor %}
 </body>
 </html>

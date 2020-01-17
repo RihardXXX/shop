@@ -26,5 +26,6 @@ urlpatterns = [
 
 """Корневой файл всех запросов, который сортирует все запросы по категориям запросов"""
 
+"""Медиа папку подключаем в корне"""
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

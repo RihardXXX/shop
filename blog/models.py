@@ -89,6 +89,9 @@ class Post(models.Model):
     def __str__(self):
         return "{}".format(self.title)
 
+    def get_tags(self):
+        return self.tags.all()
+
     def get_absolute_url(self):
         return reverse('detail_post', kwargs={'category': self.category.slug, 'slug': self.slug})
 
