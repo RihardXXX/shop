@@ -14,7 +14,10 @@ class HomeVew(View):
         """Описываем что будет делать метод get"""
         category_list = Category.objects.all()
         post_list = Post.objects.filter(published_date__lte=datetime.now(), published=True)
-        return render(request, 'blog/post_list.html', {"posts": post_list, "categories": category_list})
+        return render(request, 'blog/post_list.html', {
+            "posts": post_list,
+            "categories": category_list
+        })
 
     def post(self, request):
         """описываем что будет делать метод post"""
@@ -29,8 +32,8 @@ class PostDetailView(View):
         post = Post.objects.get(slug=slug)
         # tags = post.get_tags()
         # print(tags)
-        comment = Comment.objects.filter(post=post)
-        return render(request, 'blog/post_detail.html', {
+        comment = Comment.objects.filter(post_id=1)
+        return render(request, post.template, {
             "post": post,
             "categories": category_list,
             "comments": comment
