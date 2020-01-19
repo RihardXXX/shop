@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles', # подключаем приложение для работы со статичными файлами
     'blog', # прописываем наше новое приложение в джанго
     'mptt', # приложение библиотека для построения бинарного дерева в django
 ]
@@ -135,3 +135,8 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+"""Подключил папку статик для загрузки стилей и фоток с корня проекта"""
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]

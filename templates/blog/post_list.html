@@ -1,22 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load staticfiles %}    <!-- эта хрень загружает в шаблон статичные файлы джанго-->
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>lifehuman</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="{% static "css/default.css" %}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    {% for category in categories %}
-    <p><a href="{% url 'category' category.slug %}">{{category.name}}</a></p>
-    <hr>
-    {% endfor %}
-    <hr size="10" color="black">
-    {% for post in posts %}
-    <h2><a href="{{ post.get_absolute_url }}">{{post.title}}</a></h2>
-    <p>{{post.mini_text}}</p>
-    <small>{{post.published_date}}</small>  <br>
-    <small>Просмотров - {{ post.viewed }}</small><br>
-    <small>Комментариев - {{ post.get_comment_count }}</small>
-    <hr>
-    {% endfor %}
+<div id="header">
+	<h1><a href="#">Главная страница</a></h1>
+	<h2><a href="#"><======= вы выбрали </a></h2>
+</div>
+<div id="content">
+	<div id="archives" class="gbox">
+		<h2 class="heading">Авторизация</h2>
+		<div class="content">
+			<ul>
+				<li><a href="#">логин</a></li>
+				<li><a href="#">пароль</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="posts">
+
+		<div class="post">
+			{% for post in posts %}
+			<h2 class="title">{{post.title}}</h2>
+			<h3 class="posted">Автор - {{post.author}}</h3>
+			<div class="story">
+				<p><strong>{{post.mini_text}}</strong></p>
+			</div>
+			<h3 class="posted">Опубликовано - {{post.published_date}}</h3>
+			<h3 class="posted">Просмотров - {{ post.viewed }}</h3>
+			<div class="meta">
+				<p><a href="#" class="comment">Комментариев - {{ post.get_comment_count }}</a></p>
+			</div>
+			<div class="meta">
+				<p><a href="{{ post.get_absolute_url }}">прочитать всю статью</a></p>
+			</div>
+			{% endfor %}
+		</div>
+
+	</div>
+	<div id="search" class="gbox">
+		<h2 class="heading">Поиск</h2>
+		<div class="content">
+			<form method="get" action="#">
+				<div>
+					<input type="text" id="textfield1" name="textfield1" value="" size="18" />
+					<input type="submit" id="submit1" name="submit1" value="Search" />
+				</div>
+			</form>
+		</div>
+	</div>
+	<div id="pages" class="gbox">
+		<h2 class="heading">Направления</h2>
+		<div class="content">
+			<ul>
+				<li><a href="#">Мой блог</a></li>
+				<li><a href="#">Контакты</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="categories" class="gbox">
+		<h2 class="heading">Категории</h2>
+		<div class="content">
+			<ul>
+				{% for category in categories %}
+    			<li><a href="{% url 'category' category.slug %}">{{category.name}}</a></li>
+    			{% endfor %}
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<div id="blogroll" class="gbox">
+		<h2 class="heading">В разработке</h2>
+		<div class="content">
+			<ul>
+				<li><a href="#">в разработке</a></li>
+			</ul>
+		</div>
+	</div>
+	<div style="clear: both; height: 1px;"></div>
+</div>
+<div id="footer">
+	<p>Разработано &copy; 2020 год</p>
+</div>
 </body>
 </html>
+
