@@ -1,33 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load staticfiles %}    <!-- эта хрень загружает в шаблон статичные файлы джанго-->
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>lifehuman</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="{% static "css/default.css" %}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    {% for category in categories %}
-    <p><a href="{% url 'category' category.slug %}">{{category.name}}</a></p>
-    <hr>
-    {% endfor %}
-    <hr size="10" color="black">
+<div id="header">
+	<h1><a href="#">{{ post.category }}</a></h1>
+	<h2><a href="#"><======= вы выбрали </a></h2>
+</div>
+<div id="content">
+	<div id="archives" class="gbox">
+		<h2 class="heading">Авторизация</h2>
+		<div class="content">
+			<ul>
+				<li><a href="#">логин</a></li>
+				<li><a href="#">пароль</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="posts">
 
-    <h2>{{post.title}}</h2>
-    <p>{{post.mini_text}}</p>
-    <p>Категория - {{ post.category }}</p>
-    {# теги - {% for tag in post.get_tags %} #}
-    теги - {% for tag in post.tags.all %}
-           {{ tag.name }},
-           {% endfor %}
-        <br>
-    <hr size="3" color="gray">
-    <small>Автор: {{ post.author }} - {{post.published_date}}</small>
+        <div class="post">
 
-    <h4>Комментарии</h4>
-                  {% for comment in comments %}
-    Пользователь: {{ comment.author }}<br>
-                  <hr>
-                  {{ comment.text }}<br>
-    добавлен:     {{ comment.created_date }}
-                  {% endfor %}
+			<h2 class="title">{{post.title}}</h2>
+			<h3 class="posted">Автор - {{post.author}}</h3>
+			<div class="story">
+				<p><strong>{{post.text}}</strong></p>
+			</div>
+			<h3 class="posted">Опубликовано - {{post.published_date}}</h3>
+			<h3 class="posted">Просмотров - {{ post.viewed }}</h3>
+
+            <div class="meta">
+                <strong>теги</strong> - {% for tag in post.tags.all %}
+                        <a href="#">{{ tag.name }}</a>
+                       {% endfor %}
+			</div>
+            <br>
+			<div class="meta">
+				<p><strong>комментарии</strong></p>
+			</div>
+
+            {% for comment in comments %}
+            <div class="story">
+				<p><strong>Пользователь: {{ comment.author }}</strong></p>
+			</div>
+            <div class="story">
+				<p><strong>{{ comment.text }}</strong></p>
+			</div>
+            <h3 class="posted">добавлен: {{ comment.created_date }}</h3>
+            {% endfor %}
+
+            <h3 class="posted">Просмотров - {{ post.viewed }}</h3>
+
+
+		</div>
+
+	</div>
+	<div id="search" class="gbox">
+		<h2 class="heading">Поиск</h2>
+		<div class="content">
+			<form method="get" action="#">
+				<div>
+					<input type="text" id="textfield1" name="textfield1" value="" size="18" />
+					<input type="submit" id="submit1" name="submit1" value="Search" />
+				</div>
+			</form>
+		</div>
+	</div>
+	<div id="pages" class="gbox">
+		<h2 class="heading">Направления</h2>
+		<div class="content">
+			<ul>
+				<li><a href="#">Мой блог</a></li>
+				<li><a href="#">Контакты</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="categories" class="gbox">
+		<h2 class="heading">Категории</h2>
+		<div class="content">
+			<ul>
+				{% for category in categories %}
+    			<li><a href="{% url 'category' category.slug %}">{{category.name}}</a></li>
+    			{% endfor %}
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<div id="blogroll" class="gbox">
+		<h2 class="heading">В разработке</h2>
+		<div class="content">
+			<ul>
+				<li><a href="#">в разработке</a></li>
+			</ul>
+		</div>
+	</div>
+	<div style="clear: both; height: 1px;"></div>
+</div>
+<div id="footer">
+	<p>Разработано &copy; 2020 год</p>
+</div>
 </body>
 </html>
