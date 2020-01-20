@@ -32,7 +32,7 @@ class PostDetailView(View):
         post = Post.objects.get(slug=slug)
         # tags = post.get_tags()
         # print(tags)
-        comment = Comment.objects.filter(post_id=1)
+        comment = Comment.objects.filter(post_id=post.id)
         return render(request, post.template, {
             "post": post,
             "categories": category_list,
