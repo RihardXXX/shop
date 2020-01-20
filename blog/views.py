@@ -42,6 +42,17 @@ class PostDetailView(View):
 
 class CategoryView(View):
     """Вывод статей по категориям"""
+
+    def get_queryset(self):
+        return Post.objects.filter(published_date__lte=datetime.now(), published=True)
+
     def get(self, request, category_name):
-        category = Category.objects.get(slug=category_name)
-        return render(request, 'blog/post_list.html', {"category": category})
+        """Очень умный орм запрос, получаемый объект куери сет объект постов мы ставим фильтр,
+        чтобы слаг категории внутри объекта поста совпадал со слагом с маршрута юрл"""
+        posts = self.get_queryset().filter(category__slug=category_name, category__published=True)
+        category_list = Category.objects.all()
+        template = 'blog/category_post_list.html'
+        return render(request, template, {
+            "posts": posts,
+            "categories": category_list
+        })

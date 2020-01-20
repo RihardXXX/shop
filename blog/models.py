@@ -31,6 +31,9 @@ class Category(MPTTModel):
     paginated = models.PositiveIntegerField(verbose_name="количество статей на странице", default=5)
     sort = models.PositiveIntegerField(verbose_name="порядок", default=0)
 
+    def get_id_category(self):
+        return self.id
+
     def __str__(self):
         """Прописываем метод, чтобы в админ панели выводилось распечатку объекта"""
         return self.name
@@ -97,6 +100,9 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('detail_post', kwargs={'category': self.category.slug, 'slug': self.slug})
+
+    def get_category_template(self):
+        return self.category.template
 
     class Meta:
         verbose_name = 'новость'
