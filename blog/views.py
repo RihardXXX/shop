@@ -56,3 +56,19 @@ class CategoryView(View):
             "posts": posts,
             "categories": category_list
         })
+
+class TagsView(View):
+    """Класс выводящий все статьи заданной категории"""
+
+    def get_queryset(self):
+        return Post.objects.filter(published_date__lte=datetime.now(), published=True)
+
+    def get(self, request, slug):
+        print(slug)
+        tags_post_list = self.get_queryset().filter(tags__slug=slug, tags__published=True)
+        category_list = Category.objects.all()
+        template = 'blog/tag_post_list.html'
+        return render(request, template, {
+            "posts": tags_post_list,
+            "categories": category_list
+        })

@@ -58,6 +58,9 @@ class Tag(models.Model):
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
 
+    def get_absolute_url(self):
+        return reverse('detail_tag', kwargs={'tags': self.name, 'slug': self.slug})
+
 
 class Post(models.Model):
     """Модель Постов"""
