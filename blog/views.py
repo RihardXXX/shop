@@ -26,6 +26,7 @@ class HomeVew(View):
 
 class PostDetailView(View):
     """Класс открывающий всю статью"""
+
     def get(self, request, category, slug):
         """Описываем что будет делать метод get"""
         category_list = Category.objects.all()
@@ -46,29 +47,16 @@ class CategoryView(View):
     def get_queryset(self):
         return Post.objects.filter(published_date__lte=datetime.now(), published=True)
 
-    def get(self, request, category_name):
+    def get(self, request, category_name=None, slug=None):
         """Очень умный орм запрос, получаемый объект куери сет объект постов мы ставим фильтр,
         чтобы слаг категории внутри объекта поста совпадал со слагом с маршрута юрл"""
-        posts = self.get_queryset().filter(category__slug=category_name, category__published=True)
+        """Два подчеркивания это обращение"""
+        posts = []
         category_list = Category.objects.all()
-        template = 'blog/category_post_list.html'
-        return render(request, template, {
-            "posts": posts,
-            "categories": category_list
-        })
-
-class TagsView(View):
-    """Класс выводящий все статьи заданной категории"""
-
-    def get_queryset(self):
-        return Post.objects.filter(published_date__lte=datetime.now(), published=True)
-
-    def get(self, request, slug):
-        print(slug)
-        tags_post_list = self.get_queryset().filter(tags__slug=slug, tags__published=True)
-        category_list = Category.objects.all()
-        template = 'blog/tag_post_list.html'
-        return render(request, template, {
-            "posts": tags_post_list,
-            "categories": category_list
-        })
+        template = 'blog/post_list.html'
+        if category_name is not None:
+            posts = self.get_queryset().filter(category__slug=category_name, category__published=True)# сортировка по категориям
+        elif slug is not None:
+            posts = self.get_queryset().filter(tags__slug=slug, tags__published=True)  # сортировка по тегам
+        # if posts.exists():
+        return render(request, template, {"posts": posts, "categories": category_list})

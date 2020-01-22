@@ -49,10 +49,11 @@ img {
 /* Header */
 
 #header {
+
 	width: 760px;
 	height: 101px;
 	margin: 0 auto;
-	background: url(images/img01.jpg) no-repeat;
+	background: url(images/img01.jpg);
 }
 
 #header h1 {
