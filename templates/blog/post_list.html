@@ -13,7 +13,9 @@
 	<h1><a href="{% url 'home' %}">Главная страница</a></h1>
 	<h2><a href="#"><======= вы выбрали </a></h2>
 </div>
+
 <div id="content">
+
 	<div id="archives" class="gbox">
 		<h2 class="heading">Авторизация</h2>
 		<div class="content">
@@ -26,21 +28,25 @@
 	<div id="posts">
 
 		<div class="post">
-			{% for post in posts %}
-			<h2 class="title">{{post.title}}</h2>
-			<h3 class="posted">Автор - {{post.author}}</h3>
-			<div class="story">
-				<p><strong>{{post.mini_text}}</strong></p>
-			</div>
-			<h3 class="posted">Опубликовано - {{post.published_date}}</h3>
-			<h3 class="posted">Просмотров - {{ post.viewed }}</h3>
-			<div class="meta">
-				<p>Комментариев - {{ post.get_comment_count }}</p>
-			</div>
-			<div class="meta">
-				<p><a href="{{ post.get_absolute_url }}">прочитать всю статью</a></p>
-			</div>
-			{% endfor %}
+			{% if posts %}
+				{% for post in posts %}
+				<h2 class="title">{{post.title}}</h2>
+				<h3 class="posted">Автор - {{post.author}}</h3>
+				<div class="story">
+					<p><strong>{{post.mini_text}}</strong></p>
+				</div>
+				<h3 class="posted">Опубликовано - {{post.published_date}}</h3>
+				<h3 class="posted">Просмотров - {{ post.viewed }}</h3>
+				<div class="meta">
+					<p>Комментариев - {{ post.get_comment_count }}</p>
+				</div>
+				<div class="meta">
+					<p><a href="{{ post.get_absolute_url }}">прочитать всю статью</a></p>
+				</div>
+				{% endfor %}
+			{% else %}
+				статей нет
+			{% endif %}
 		</div>
 
 	</div>
