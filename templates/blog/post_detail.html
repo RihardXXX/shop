@@ -41,8 +41,29 @@
                        {% endfor %}
 			</div>
             <br>
-			<div class="meta">
-				<p><strong>комментарии</strong></p>
+
+
+			<div id="blogroll" class="gbox">
+				<h2 class="heading">оставить комментарий</h2>
+				<div class="content">
+					{% if user.is_authenticated %} <!-- если юзер авторизован мы покажем форму -->
+						<form action="/comment/{{ post.id }}/" method="post"> <!-- осуществляем привязку коммента к опр статье -->
+							{% csrf_token %} <!-- токен без которго джанго не примит запрос пост -->
+							введите текст комментария <!-- -->
+							{{ form }}
+							<button type="submit">отправить</button> <!-- отправляем данные -->
+						</form>
+					{% else %} <!-- иначе -->
+						чтобы оставить комментарий авторизуйтесь на сайте пожалуйста
+					{% endif %}
+
+				</div>
+				<h2 class="heading"></h2>
+			</div>
+			<br>
+
+			<div class="posted">
+				<h1>комментарии</h1>
 			</div>
 
             {% for comment in comments %}
@@ -92,14 +113,14 @@
 			</ul>
 		</div>
 	</div>
-	<div id="blogroll" class="gbox">
-		<h2 class="heading">В разработке</h2>
-		<div class="content">
-			<ul>
-				<li><a href="#">в разработке</a></li>
-			</ul>
-		</div>
-	</div>
+<!--	<div id="blogroll" class="gbox">-->
+<!--		<h2 class="heading">В разработке</h2>-->
+<!--		<div class="content">-->
+<!--			<ul>-->
+<!--				<li><a href="#">в разработке</a></li>-->
+<!--			</ul>-->
+<!--		</div>-->
+<!--	</div>-->
 	<div style="clear: both; height: 1px;"></div>
 </div>
 <div id="footer">

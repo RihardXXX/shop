@@ -164,7 +164,7 @@ img {
 
 #blogroll {
 	float: left;
-	width: 180px;
+	width: 100%;
 }
 
 /* Orange Box */
@@ -211,7 +211,7 @@ img {
 .gbox .heading {
 	height: 28px;
 	padding: 3px 0 0 10px;
-	background: url(images/img06.jpg) no-repeat;
+	background: url(images/img06.jpg) center;
 	letter-spacing: -1px;
 	font-size: 1.4em;
 	color: #FFFFFF;

@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.views import View
 from  .models import *
+from .forms import CommentForm
 
 """тут описываем логику работы программы при получении запроса"""
 
@@ -37,9 +38,33 @@ class PostDetailView(View):
         """Описываем что будет делать метод get"""
         category_list = Category.objects.all()
         post = get_object_or_404(Post, slug=kwargs.get("slug")) # вернуть 404 если страницы не совпадают
-        comment = Comment.objects.filter(post_id=post.id)
+        comment = Comment.objects.filter(post_id=post.id) # комменты привязанные к этой статье
+        form = CommentForm()
         return render(request, post.template, {
             "post": post,
             "categories": category_list,
-            "comments": comment
+            "comments": comment,
+            "form": form
         })
+
+class CreateCommentView(View):
+    """Класс принимающий пост запросы"""
+    def post(self, request, pk):
+        print(request.POST)
+        # Comment.objects.create( # первый метод создания объекта для записи в базу данных
+        #     author=request.user,
+        #     post_id=request.POST.get("post"),
+        #     text=request.POST.get("text")
+        # )
+        # comment = Comment() # второй способ записи данных  в базу данных
+        # comment.author = request.user
+        # comment.post_id = request.POST.get("post")
+        # comment.text = request.POST.get("text")
+        # comment.save()
+        form = CommentForm(request.POST) # создается объект с заполненными даными для БД
+        if form.is_valid(): # если отправленные данные валидны
+            form = form.save(commit=False)
+            form.post_id = pk
+            form.author = request.user
+            form.save()
+        return HttpResponse(status=201)
