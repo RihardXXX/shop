@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.views import View
 from  .models import *
@@ -47,10 +47,7 @@ class PostDetailView(View):
             "form": form
         })
 
-class CreateCommentView(View):
-    """Класс принимающий пост запросы"""
-    def post(self, request, pk):
-        print(request.POST)
+    def post(self, request, **kwargs):
         # Comment.objects.create( # первый метод создания объекта для записи в базу данных
         #     author=request.user,
         #     post_id=request.POST.get("post"),
@@ -61,10 +58,13 @@ class CreateCommentView(View):
         # comment.post_id = request.POST.get("post")
         # comment.text = request.POST.get("text")
         # comment.save()
+        print(request.POST)
+        print(kwargs)
         form = CommentForm(request.POST) # создается объект с заполненными даными для БД
         if form.is_valid(): # если отправленные данные валидны
             form = form.save(commit=False)
-            form.post_id = pk
+            form.post = Post.objects.get(slug=kwargs.get("slug"))
             form.author = request.user
             form.save()
-        return HttpResponse(status=201)
+        return redirect(request.path)
+

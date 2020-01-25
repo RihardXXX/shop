@@ -47,7 +47,7 @@
 				<h2 class="heading">оставить комментарий</h2>
 				<div class="content">
 					{% if user.is_authenticated %} <!-- если юзер авторизован мы покажем форму -->
-						<form action="/comment/{{ post.id }}/" method="post"> <!-- осуществляем привязку коммента к опр статье -->
+						<form action="" method="post"> <!-- осуществляем привязку коммента к опр статье -->
 							{% csrf_token %} <!-- токен без которго джанго не примит запрос пост -->
 							введите текст комментария <!-- -->
 							{{ form }}
@@ -74,6 +74,7 @@
 				<p><strong>{{ comment.text }}</strong></p>
 			</div>
             <h3 class="posted">добавлен: {{ comment.created_date }}</h3>
+			<hr>
             {% endfor %}
 
             <h3 class="posted">Просмотров - {{ post.viewed }}</h3>
