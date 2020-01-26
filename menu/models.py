@@ -44,27 +44,3 @@ class MenuItem(MPTTModel):
     
     
     
-"""Задание:
-
-5. Создать приложение Страницы
-6. Создать модель Page
-	1. title
-	2. text
-	3. active - Вкл\Выкл
-	4. template - CharField - default='page/index.html'
-	5. slug - url
-7. Вывести страницы в админку
-8. Доп. задание
-	1. Написать view и url для вывода страниц
-
-Доп. инфо:
-
-Custom template tags - https://docs.djangoproject.com/en/2.2/howto/custom-template-tags/
-
-Django template tags - https://docs.djangoproject.com/en/2.2/ref/templates/builtins/#for
-
-Django request - https://docs.djangoproject.com/en/2.2/ref/request-response/
-
-Репозиторий:
-
-https://github.com/DJWOMS/CourseDjango2"""
