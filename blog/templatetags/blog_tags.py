@@ -14,7 +14,7 @@ def get_categories(context, order, count):
 
 @register.inclusion_tag('base/tags/base_tag.html', takes_context=True)
 def category_list(context, order='-name', count=None, template='base/blog/categories.html'):
-    """template tag вывода категорий"""
+    """template tag вывода категорий с шаблоном"""
     categories = get_categories(context, order, count)
     return {'template': template, "category_list": categories}
 

@@ -19,7 +19,7 @@ class PostListView(View):
         """Очень умный орм запрос, получаемый объект куери сет объект постов мы ставим фильтр,
         чтобы слаг категории внутри объекта поста совпадал со слагом с маршрута юрл"""
         """Два подчеркивания это обращение"""
-        category_list = Category.objects.all() # полный список категорий
+        #category_list = Category.objects.all() # полный список категорий
         template = 'blog/post_list.html' # шаблон по умолчанию
         if category_name is not None: # если в запрос пришло название категории
             posts = self.get_queryset().filter(category__slug=category_name, category__published=True)# сортировка по категориям
@@ -27,7 +27,7 @@ class PostListView(View):
             posts = self.get_queryset().filter(tags__slug=slug)  # сортировка по тегам
         else: # если ничего не пришло
             posts = self.get_queryset()  # полный список статей
-        return render(request, template, {"posts": posts, "categories": category_list})
+        return render(request, template, {"posts": posts })
 
 
 
@@ -36,13 +36,12 @@ class PostDetailView(View):
 
     def get(self, request, **kwargs):
         """Описываем что будет делать метод get"""
-        category_list = Category.objects.all()
+        #category_list = Category.objects.all()
         post = get_object_or_404(Post, slug=kwargs.get("slug")) # вернуть 404 если страницы не совпадают
         comment = Comment.objects.filter(post_id=post.id) # комменты привязанные к этой статье
         form = CommentForm()
         return render(request, post.template, {
             "post": post,
-            "categories": category_list,
             "comments": comment,
             "form": form
         })

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}    <!-- эта хрень загружает в шаблон статичные файлы джанго-->
+{% load blog_tags %}  <!-- эта хрень загружает template тэги-->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -107,10 +108,10 @@
 		<h2 class="heading">Категории</h2>
 		<div class="content">
 			<ul>
+				{% for_category_list as categories %} <!-- Этот template tag  -->
 				{% for category in categories %}
     			<li><a href="{% url 'category' category.slug %}">{{category.name}}</a></li>
     			{% endfor %}
-				<li></li>
 			</ul>
 		</div>
 	</div>
