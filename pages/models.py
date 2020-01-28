@@ -7,10 +7,19 @@ class Page(models.Model):
     text = models.TextField(verbose_name="текст страницы", null=True, blank=True)
     active = models.BooleanField(verbose_name="Вкл\Выкл", default=False)
     template = models.CharField(verbose_name="шаблон", max_length=500, default="page/index.html")
-    slug = models.CharField(verbose_name="url", max_length=200, unique=True)
+    slug = models.SlugField(verbose_name="url", max_length=200, unique=True)
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if self.slug is None:
+            self.slug = "/"
+        if not f"{self.slug}".startswith("/"):
+            self.slug = "/" + self.slug
+        if not self.slug.endswith("/"):
+            self.slug += "/"
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Страница"

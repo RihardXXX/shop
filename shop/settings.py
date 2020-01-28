@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'blog', # прописываем наше новое приложение в джанго
     'mptt', # приложение библиотека для построения бинарного дерева в django
     'menu', # регистрация приложения меню
+    'pages',# регистрация приложения для создания статических страниц
+    'django.contrib.sites',# это приложение помогает узнать на каком сайте мы сейчас находимся
 ]
 
 # штука ,которая срабатывает после запроса
@@ -128,6 +130,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+SITE_ID = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
