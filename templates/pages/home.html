@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}    <!-- эта хрень загружает в шаблон статичные файлы джанго-->
 {% load blog_tags %}  <!-- эта хрень загружает template тэги-->
-{% load mptt_tags %}  <!-- Mptt тэги -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -12,14 +11,12 @@
 </head>
 <body>
 <div id="header">
-	<h1><a href="{% url 'home' %}">Главная страница</a></h1>
+	<h1><a href="#">{{ post.category }}</a></h1>
 	<h2><a href="#"><======= вы выбрали </a></h2>
 </div>
-
 <div id="content">
-
 	<div id="archives" class="gbox">
-		<a href="{% url 'page' page.slug %}"><h2 class="heading">о нас</h2></a>
+		<h2 class="heading">Авторизация</h2>
 		<div class="content">
 			<ul>
 				<li><a href="#">логин</a></li>
@@ -29,26 +26,14 @@
 	</div>
 	<div id="posts">
 
-		<div class="post">
-			{% if posts %}
-				{% for post in posts %}
-				<h2 class="title">{{post.title}}</h2>
-				<h3 class="posted">Автор - {{post.author}}</h3>
-				<div class="story">
-					<p><strong>{{post.mini_text}}</strong></p>
-				</div>
-				<h3 class="posted">Опубликовано - {{post.published_date}}</h3>
-				<h3 class="posted">Просмотров - {{ post.viewed }}</h3>
-				<div class="meta">
-					<p>Комментариев - {{ post.get_comment_count }}</p>
-				</div>
-				<div class="meta">
-					<p><a href="{{ post.get_absolute_url }}">прочитать всю статью</a></p>
-				</div>
-				{% endfor %}
-			{% else %}
-				<div class="posts">статей нет</div>
-			{% endif %}
+        <div class="post">
+
+			{% for p in page %}
+				<h2 class="title">{{p.title}}</h2>
+				<h3 class="posted">{{p.text}}</h3>
+			{% endfor %}
+
+
 		</div>
 
 	</div>
@@ -81,27 +66,13 @@
     			<li><a href="{% url 'category' category.slug %}">{{category.name}}</a></li>
     			{% endfor %}
 			</ul>
-
-			<ul class="root">
-    			{% recursetree categories %}
-        			<li>
-            			{{ node.name }}
-            			{% if not node.is_leaf_node %}
-                			<ul class="children">
-                    			{{ children }}
-                			</ul>
-            			{% endif %}
-        			</li>
-    			{% endrecursetree %}
-			</ul>
-
 		</div>
 	</div>
 <!--	<div id="blogroll" class="gbox">-->
 <!--		<h2 class="heading">В разработке</h2>-->
 <!--		<div class="content">-->
 <!--			<ul>-->
-<!--				<li><a href="{% url 'home' %}">главная страница</a></a></li>-->
+<!--				<li><a href="#">в разработке</a></li>-->
 <!--			</ul>-->
 <!--		</div>-->
 <!--	</div>-->
@@ -112,4 +83,3 @@
 </div>
 </body>
 </html>
-

@@ -21,7 +21,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("blog.url"))
+    path('', include("blog.url")), # подключение приложение блог
+    path('page/', include("pages.url")), # подключаем приложение pages
 ]
 
 """Корневой файл всех запросов, который сортирует все запросы по категориям запросов"""
