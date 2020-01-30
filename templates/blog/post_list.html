@@ -2,6 +2,7 @@
 {% load staticfiles %}    <!-- эта хрень загружает в шаблон статичные файлы джанго-->
 {% load blog_tags %}  <!-- эта хрень загружает template тэги-->
 {% load mptt_tags %}  <!-- Mptt тэги -->
+{% load menu_tags %}  <!-- в приложении меню подгружаем темлейт теги -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -19,7 +20,7 @@
 <div id="content">
 
 	<div id="archives" class="gbox">
-		<a href="{% url 'page' page.slug %}"><h2 class="heading">о нас</h2></a>
+		<a href="#"><h2 class="heading">о нас</h2></a>
 		<div class="content">
 			<ul>
 				<li><a href="#">логин</a></li>
@@ -75,6 +76,11 @@
 	<div id="categories" class="gbox">
 		<h2 class="heading">Категории</h2>
 		<div class="content">
+			<!-- Вывод данных через темплейт теги -->
+			<ul>
+				{% menu_item menu="Main" %}
+			</ul>
+
 			<ul>
 				{% for_category_list as categories %} <!-- Этот template tag  -->
 				{% for category in categories %}
@@ -82,18 +88,18 @@
     			{% endfor %}
 			</ul>
 
-			<ul class="root">
-    			{% recursetree categories %}
-        			<li>
-            			{{ node.name }}
-            			{% if not node.is_leaf_node %}
-                			<ul class="children">
-                    			{{ children }}
-                			</ul>
-            			{% endif %}
-        			</li>
-    			{% endrecursetree %}
-			</ul>
+<!--			<ul class="root">-->
+<!--    			{% recursetree categories %}-->
+<!--        			<li>-->
+<!--            			{{ node.name }}-->
+<!--            			{% if not node.is_leaf_node %}-->
+<!--                			<ul class="children">-->
+<!--                    			{{ children }}-->
+<!--                			</ul>-->
+<!--            			{% endif %}-->
+<!--        			</li>-->
+<!--    			{% endrecursetree %}-->
+<!--			</ul>-->
 
 		</div>
 	</div>

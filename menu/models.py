@@ -24,7 +24,7 @@ class Menu(models.Model):
     class Meta:
         """Прописываем название класса в административной части"""
         verbose_name='Меню'
-        verbose_name_plural='менюшки'
+        verbose_name_plural='меню'
         
     def __str__(self):
         return self.name
@@ -52,17 +52,17 @@ class MenuItem(MPTTModel):
     url = models.CharField(verbose_name='ссылка на внешний ресурс', max_length=300, null=True, blank=True)
     active = models.BooleanField(verbose_name='Вкл\Выкл', default=False)
 
-    # content_type = models.ForeignKey(
-    #     ContentType,
-    #     verbose_name="Ссылка на",
-    #     limit_choices_to=settings.MENU_APPS,
-    #     on_delete=models.CASCADE,
-    #     null=True,
-    #     blank=True)
-    # object_id = models.PositiveIntegerField('Id записи', default=1, null=True)
-    # content_object = GenericForeignKey('content_type', 'object_id')
-    # sort = models.PositiveIntegerField('Порядок', default=0)
-    # published = models.BooleanField("Отображать?", default=True)
+    content_type = models.ForeignKey(
+        ContentType,
+        verbose_name="Ссылка на",
+        #limit_choices_to=settings.MENU_APPS,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True)
+    object_id = models.PositiveIntegerField('Id записи', default=1, null=True)
+    content_object = GenericForeignKey('content_type', 'object_id')
+    sort = models.PositiveIntegerField('Порядок', default=0)
+    published = models.BooleanField("Отображать?", default=True)
 
     
     def __str__(self):
@@ -73,6 +73,11 @@ class MenuItem(MPTTModel):
             return "{}/#{}".format(Site.objects.get_current().domain, self.anchor)
         else:
             return False
+
+    class Meta:
+        """Прописываем название класса в административной части"""
+        verbose_name='пункты меню'
+        verbose_name_plural='пункты меню'
     
 
     
