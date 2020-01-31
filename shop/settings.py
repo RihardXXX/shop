@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',# это приложение помогает узнать на каком сайте мы сейчас находимся
 ]
 
-# штука ,которая срабатывает после запроса
+# штука ,которая срабатывает после запроса и пока до views запрос не дошел
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -61,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pages.middleware.PageFallbackMiddleware', # эта хуйня которая срабатывает между url запросом и Views
 ]
 
 #Тут прописывается путь к главному файлу юрл запросов

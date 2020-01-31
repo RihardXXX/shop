@@ -35,9 +35,9 @@ class AboutView(View):
         return AboutView.render_page(request, page)
 
 
-    # def get(self, request, url):
-    #     page = Page.objects.all()
-    #     template = 'pages/home.html'
-    #     return render(request, template, {
-    #         "page" : page,
-    #     })
+# def get_page(self, request, url):
+#     page = Page.objects.all()
+#     template = 'pages/home.html'
+#     return render(request, template, {
+#         "page" : page,
+#     })
