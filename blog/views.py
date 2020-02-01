@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.views import View
 from  .models import *
 from .forms import CommentForm
+#from ..feedback.views import get_feedback
 
 """тут описываем логику работы программы при получении запроса"""
 
@@ -21,6 +22,8 @@ class PostListView(View):
         """Два подчеркивания это обращение"""
         #category_list = Category.objects.all() # полный список категорий
         template = 'blog/post_list.html' # шаблон по умолчанию
+        if category_name == "feedback":
+            request.url
         if category_name is not None: # если в запрос пришло название категории
             posts = self.get_queryset().filter(category__slug=category_name, category__published=True)# сортировка по категориям
         elif slug is not None: # если в запрос пришло название тэга

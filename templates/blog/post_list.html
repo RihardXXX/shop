@@ -54,15 +54,15 @@
 
 	</div>
 	<div id="search" class="gbox">
-		<h2 class="heading">Поиск</h2>
-		<div class="content">
-			<form method="get" action="#">
-				<div>
-					<input type="text" id="textfield1" name="textfield1" value="" size="18" />
-					<input type="submit" id="submit1" name="submit1" value="Search" />
-				</div>
-			</form>
-		</div>
+		<a href="feedback/"><h2 class="heading">форма обратной связи</h2></a> <!-- ссылку сделать через питон тег -->
+<!--		<div class="content">-->
+<!--			<form method="get" action="#">-->
+<!--				<div>-->
+<!--					<input type="text" id="textfield1" name="textfield1" value="" size="18" />-->
+<!--					<input type="submit" id="submit1" name="submit1" value="Search" />-->
+<!--				</div>-->
+<!--			</form>-->
+<!--		</div>-->
 	</div>
 	<div id="pages" class="gbox">
 		<h2 class="heading">Направления</h2>
@@ -83,9 +83,9 @@
 
 			<ul>
 				{% for_category_list as categories %} <!-- Этот template tag  -->
-				{% for category in categories %}
-    			<li><a href="{% url 'category' category.slug %}">{{category.name}}</a></li>
-    			{% endfor %}
+<!--				{% for category in categories %}-->
+<!--    			<li><a href="{% url 'category' category.slug %}">{{category.name}}</a></li>-->
+<!--    			{% endfor %}-->
 			</ul>
 
 <!--			<ul class="root">-->
