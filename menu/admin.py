@@ -15,7 +15,7 @@ class MenuAdmin(admin.ModelAdmin):
     list_display = ("name", "is_auth", "activate")                 # столбцы которые будут выводится в админ части
     list_filter = ("activate",)                                    # фильтр активировано или нет справа в админ части
 
-
+# exmaple
 @admin.register(MenuItem)                                          # декораторы которые запускаются в начале и регистрируют в адм. панели
 class MenuItemAdmin(MPTTModelAdmin):
     """визуялизация пунктов меню в админ части"""
