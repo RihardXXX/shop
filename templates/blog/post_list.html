@@ -78,14 +78,14 @@
 		<div class="content">
 			<!-- Вывод данных через темплейт теги -->
 			<ul>
-				{% menu_item menu="Main" %}
+<!--				{% menu_item menu="Main" %}-->
 			</ul>
 
 			<ul>
-				{% for_category_list as categories %} <!-- Этот template tag  -->
-<!--				{% for category in categories %}-->
-<!--    			<li><a href="{% url 'category' category.slug %}">{{category.name}}</a></li>-->
-<!--    			{% endfor %}-->
+<!--				{% for_category_list as categories %} &lt;!&ndash; Этот template tag  &ndash;&gt;-->
+				{% for category in categories %}
+    			<li><a href="{% url 'category' category.slug %}">{{category.name}}</a></li>
+    			{% endfor %}
 			</ul>
 
 <!--			<ul class="root">-->

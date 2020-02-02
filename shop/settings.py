@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'pages',                                    # регистрация приложения для создания статических страниц
     'django.contrib.sites',                     # это приложение помогает узнать на каком сайте мы сейчас находимся
     'feedback',                                 # приложение обратной связи с клиентами
+    'ckeditor',
+    'ckeditor_uploader',                        # установка специального редактора в админ панель
 ]
 
 # штука ,которая срабатывает после запроса и пока до views запрос не дошел
@@ -62,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'pages.middleware.PageFallbackMiddleware', # эта хуйня которая срабатывает между url запросом и Views
+    #'pages.middleware.PageFallbackMiddleware', # эта хуйня которая срабатывает между url запросом и Views
 ]
 
 #Тут прописывается путь к главному файлу юрл запросов
@@ -138,11 +140,18 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 # как называться будет путь к статическим файлам
 STATIC_URL = '/static/'
+"""Подключил папку статик для загрузки стилей и фоток с корня проекта"""
+
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-"""Подключил папку статик для загрузки стилей и фоток с корня проекта"""
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+
+#CKEDITOR_UPLOAD_PATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
