@@ -1,6 +1,18 @@
 from django.contrib import admin
+from django import forms
 from .models import Post
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
+
+
+class PostAdminForm(forms.ModelForm):
+    """Этот класс нужен чтобы подключить виджет редактора creditor как в ворде чтобы было"""
+    text = forms.CharField(required=False, label="полное содержание новости", widget=CKEditorUploadingWidget())
+
+    class Meta:
+        """Указываем привязку к классу модели"""
+        model = Post                                    # указываем привязку к модели к которой нужно привязаься
+        fields = '__all__'
 
 
 
@@ -10,6 +22,8 @@ class PostAdmin(admin.ModelAdmin):
     list_display_links = ('title',)                                                # указываем ссылкой какой пункт будет в админке
     list_filter = ('category',)                                                    # фильтро сортировки по категориям
     actions = ['make_published_false', 'make_published_true']                      # указываем какой экш должен работать в адм панели
+    form = PostAdminForm                                                           # указываем какую форму нужно закрепить для виджета
+
 
     def get_message_change(self, number_change):                                   # сообщение которое возвращаем в зависимости
         if number_change == 1:                                                     # от количества изменений изменяем цифру
