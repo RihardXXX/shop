@@ -53,6 +53,14 @@ INSTALLED_APPS = [
     'feedback',                                 # приложение обратной связи с клиентами
     'ckeditor',
     'ckeditor_uploader',                        # установка специального редактора в админ панель
+    'allauth',                                  # обычная авторизация
+    # 'allauth.account',
+    # 'allauth.socialaccount',                    # авторизация через социальные сети
+    # 'allauth.socialaccount.providers.instagram', # список социальных сетей через которые можно авторизоваться
+    # 'allauth.socialaccount.providers.vk',
+    # 'allauth.socialaccount.providers.yandex',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.twitter',
 ]
 
 # штука ,которая срабатывает после запроса и пока до views запрос не дошел
@@ -154,4 +162,40 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CKEDITOR_UPLOAD_PATH = "/static/ckeditor/ckeditor/"
 #CKEDITOR_UPLOAD_PATH = "uploads/"
+
+# необходимые настройки для модуля авторизации пользователей
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+# вместо dummy ставим протокол smtp и тому подобный
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
+# Allauth список настроек для модуля авторизации
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_UNIQUE = True
+# ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True                             # обязательно ли подтверждение через электронную почту
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3                               # время до подтверждения регистрации
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+ACCOUNT_USERNAME_BLACKLIST = ["admin", "administrator", "moderator"]     # имена которые нельзя использовать при регистрации
+ACCOUNT_USERNAME_MIN_LENGTH = 4                                          # минимальное число символов при регистрации
+LOGIN_REDIRECT_URL = "/blog"                                                 # куда направить пользователя после авторизации
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
+# ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+
+# Provider specific settings настройки для входа через социальные сети
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'APP': {
+#             'client_id': '123',
+#             'secret': '456',
+#             'key': ''
+#         }
+#     }
+# }
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-from .models import Post
+from .models import Post, Comment
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
@@ -11,9 +11,14 @@ class PostAdminForm(forms.ModelForm):
 
     class Meta:
         """Указываем привязку к классу модели"""
-        model = Post                                    # указываем привязку к модели к которой нужно привязаься
+        model = Post                                                                 # указываем привязку к модели к которой нужно привязаься
         fields = '__all__'
 
+
+class CommentsInline(admin.StackedInline):
+    """в админ части привязываем в постам комментарии которые связаны первичным ключом"""
+    model = Comment                                                                # Привязали модель к классу
+    extra = 1                                                                      # Выводит только 1 пустое поле комментов
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -23,6 +28,7 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('category',)                                                    # фильтро сортировки по категориям
     actions = ['make_published_false', 'make_published_true']                      # указываем какой экш должен работать в адм панели
     form = PostAdminForm                                                           # указываем какую форму нужно закрепить для виджета
+    inlines = [CommentsInline]                                                     # Привязываем класс который будет привязывать комментарии
 
 
     def get_message_change(self, number_change):                                   # сообщение которое возвращаем в зависимости

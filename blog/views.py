@@ -16,16 +16,16 @@ class PostListView(View):
     def get_queryset(self):
         return Post.objects.filter(published_date__lte=datetime.now(), published=True)
 
-    def get(self, request, category_name=None, slug=None):
+    def get(self, request, category_slug=None, slug=None):
         """Очень умный орм запрос, получаемый объект куери сет объект постов мы ставим фильтр,
         чтобы слаг категории внутри объекта поста совпадал со слагом с маршрута юрл"""
         """Два подчеркивания это обращение"""
         #category_list = Category.objects.all() # полный список категорий
         template = 'blog/post_list.html' # шаблон по умолчанию
-        if category_name == "feedback":
+        if category_slug == "feedback":
             request.url
-        if category_name is not None: # если в запрос пришло название категории
-            posts = self.get_queryset().filter(category__slug=category_name, category__published=True)# сортировка по категориям
+        if category_slug is not None: # если в запрос пришло название категории
+            posts = self.get_queryset().filter(category__slug=category_slug, category__published=True)# сортировка по категориям
         elif slug is not None: # если в запрос пришло название тэга
             posts = self.get_queryset().filter(tags__slug=slug)  # сортировка по тегам
         else: # если ничего не пришло
@@ -40,14 +40,20 @@ class PostDetailView(View):
     def get(self, request, **kwargs):
         """Описываем что будет делать метод get"""
         #category_list = Category.objects.all()
-        post = get_object_or_404(Post, slug=kwargs.get("slug")) # вернуть 404 если страницы не совпадают
-        comment = Comment.objects.filter(post_id=post.id) # комменты привязанные к этой статье
+        category_list = Category.objects.filter(published=True)
+        post = get_object_or_404(Post, slug=kwargs.get("slug"))
         form = CommentForm()
-        return render(request, post.template, {
-            "post": post,
-            "comments": comment,
-            "form": form
-        })
+        return render(request, post.template,
+                      {"categories": category_list, "post": post, "form": form}
+        )
+        # post = get_object_or_404(Post, slug=kwargs.get("slug")) # вернуть 404 если страницы не совпадают
+        # comment = Comment.objects.filter(post_id=post.id) # комменты привязанные к этой статье
+        # form = CommentForm()
+        # return render(request, post.template, {
+        #     "post": post,
+        #     "comments": comment,
+        #     "form": form
+        # })
 
     def post(self, request, **kwargs):
         # Comment.objects.create( # первый метод создания объекта для записи в базу данных
