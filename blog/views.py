@@ -22,8 +22,6 @@ class PostListView(View):
         """Два подчеркивания это обращение"""
         #category_list = Category.objects.all() # полный список категорий
         template = 'blog/post_list.html' # шаблон по умолчанию
-        if category_slug == "feedback":
-            request.url
         if category_slug is not None: # если в запрос пришло название категории
             posts = self.get_queryset().filter(category__slug=category_slug, category__published=True)# сортировка по категориям
         elif slug is not None: # если в запрос пришло название тэга

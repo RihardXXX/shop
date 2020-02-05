@@ -22,10 +22,11 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),  # подключаю виджет уже пол дня))) это жесть
-    path('accounts/', include('allauth.urls')),          # регистрируем путь для приложения авторизации
-    path('blog/', include("blog.urls")),                         # подключение приложение блог
-    path('page/', include("pages.urls")),                   # подключаем приложение pages
-    path('feedback/', include("feedback.urls")),            # подключаем приложение feedback
+    path('accounts/', include('allauth.urls')),            # регистрируем путь для приложения авторизации
+    path('blog/', include("blog.urls")),                   # подключение приложение блог
+    path('page/', include("pages.urls")),                  # подключаем приложение pages
+    path('feedback/', include("feedback.urls")),           # подключаем приложение feedback
+    path('', include("home.urls")),                        # подключаем приложение домашняя страница
 ]
 
 """Корневой файл всех запросов, который сортирует все запросы по категориям запросов"""

@@ -82,7 +82,7 @@
 			</ul>
 
 			<ul>
-<!--				{% for_category_list as categories %} &lt;!&ndash; Этот template tag  &ndash;&gt;-->
+				{% for_category_list as categories %} <!-- Этот template tag  -->
 				{% for category in categories %}
     			<li><a href="{% url 'category' category.slug %}">{{category.name}}</a></li>
     			{% endfor %}
