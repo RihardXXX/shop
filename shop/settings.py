@@ -55,10 +55,10 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',                        # установка специального редактора в админ панель
     'allauth',                                  # обычная авторизация
-    # 'allauth.account',
-    # 'allauth.socialaccount',                    # авторизация через социальные сети
+    'allauth.account',
+    'allauth.socialaccount',                    # авторизация через социальные сети
     # 'allauth.socialaccount.providers.instagram', # список социальных сетей через которые можно авторизоваться
-    # 'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.vk',
     # 'allauth.socialaccount.providers.yandex',
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.twitter',
@@ -182,21 +182,184 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3                               # вр�
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_USERNAME_BLACKLIST = ["admin", "administrator", "moderator"]     # имена которые нельзя использовать при регистрации
 ACCOUNT_USERNAME_MIN_LENGTH = 4                                          # минимальное число символов при регистрации
-LOGIN_REDIRECT_URL = "/blog"                                                 # куда направить пользователя после авторизации
+ACCOUNT_USERNAME_REQUIRED = False
+LOGIN_REDIRECT_URL = "/"                                                 # куда направить пользователя после авторизации
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
 # ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 
 # Provider specific settings настройки для входа через социальные сети
-# SOCIALACCOUNT_PROVIDERS = {
-#     'google': {
-#         # For each OAuth based provider, either add a ``SocialApp``
-#         # (``socialaccount`` app) containing the required client
-#         # credentials, or list them here:
-#         'APP': {
-#             'client_id': '123',
-#             'secret': '456',
-#             'key': ''
-#         }
-#     }
-# }
+SOCIALACCOUNT_PROVIDERS = {
+    'vk': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '7310169',
+            'secret': 'mSNStR9SZXkpe7swguTz',
+            'key': ''
+        }
+    }
+}
+"""
+Уже пол дня не могу подключить модуль авторизации на локальном хосте.
+алгоритм действий
+1.  Установил модуль
+2. Создал миграции
+3. установил в 
+<code lang="python">
+    'allauth',                                  # обычная авторизация
+    'allauth.account',
+    'allauth.socialaccount',                    # авторизация через социальные сети
+    'allauth.socialaccount.providers.vk',
+</code>
 
+4. в setting прописал
+<code lang="python">
+# Настройка шаблонов
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # указываем в какой дирректории лежат наши шаблоны
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+</code>
+5.  Прописал в setting
+<code lang="python">
+# необходимые настройки для модуля авторизации пользователей
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+</code>
+
+6.  Прописал в setting
+<code lang="python">
+# вместо dummy ставим протокол smtp и тому подобный
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
+# Allauth список настроек для модуля авторизации
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_UNIQUE = True
+# ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True                             # обязательно ли подтверждение через электронную почту
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3                               # время до подтверждения регистрации
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+ACCOUNT_USERNAME_BLACKLIST = ["admin", "administrator", "moderator"]     # имена которые нельзя использовать при регистрации
+ACCOUNT_USERNAME_MIN_LENGTH = 4                                          # минимальное число символов при регистрации
+ACCOUNT_USERNAME_REQUIRED = False
+LOGIN_REDIRECT_URL = "/"                                                 # куда направить пользователя после авторизации
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
+# ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+</code>
+
+7. Тут не знаю что писать 
+<code lang="python">
+# Provider specific settings настройки для входа через социальные сети
+# SOCIALACCOUNT_PROVIDERS = {
+# #     'vk': {
+# #         # For each OAuth based provider, either add a ``SocialApp``
+# #         # (``socialaccount`` app) containing the required client
+# #         # credentials, or list them here:
+# #         'APP': {
+
+# #         }
+# #     }
+# # }
+</code>
+
+8. Зарегал приложение в вк
+получил:
+ ID приложения ?????????
+Защищённый ключ ?????????
+Сервисный ключ доступа ???????????
+Адрес сайта: указал http://127.0.0.1:8000/
+Базовый домен : 127.0.0.1 и указал local host
+Доверенный redirect URI:  http://localhost:8000/accounts/vk/login/callback/
+
+9. Зашел от имени админа
+Зашел в социальные приложения
+Провайдер указал: VK
+Имя : VK
+Id клиента: указал id Приложения который вк выдал
+Секретный ключ: указал Защищённый ключ который выдал клиент.
+Sites: во втором столбе которая справа добавил http://127.0.0.1:8000/
+
+10. в Шаблоне кнопка появляется но при нажатии выводит <code lang="python">
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+
+{% load socialaccount %}
+{% get_providers as socialaccount_providers %}
+
+  <a class="btn btn-social-icon btn-sm btn-vk" href="http://localhost/accounts/vk/login/callback/">
+    <span class="fa fa-vk">gggggggggggggggg</span>
+  </a>
+
+
+<h1>{% trans "Sign In" %}</h1>
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}Please sign in with one
+of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+
+  <div class="login-or">{% trans 'or' %}</div>
+
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+<p>{% blocktrans %}If you have not created an account yet, then please
+<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+{% endif %}
+
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+</form>
+
+{% endblock %}
+</code>
+
+
+При нажатии выводит сообщение
+=================================
+DoesNotExist at /accounts/vk/login/
+SocialApp matching query does not exist.
+и куча ошибок
+
+ссылка при нажатии http://127.0.0.1:8000/accounts/vk/login/?process=login
+
+Подозреваю на словарь в senng SOCIALACCOUNT_PROVIDERS не знаю как его заполнить.
+Помогите пожалуйста )
+"""

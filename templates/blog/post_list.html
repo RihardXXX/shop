@@ -54,7 +54,12 @@
 
 	</div>
 	<div id="search" class="gbox">
-		<a href="feedback/"><h2 class="heading">форма обратной связи</h2></a> <!-- ссылку сделать через питон тег -->
+			{% if user.is_authenticated %} <!-- если юзер авторизован мы покажем форму -->
+						<h2 class="heading">Вы авторизованы</h2>
+						<a href="accounts/logout/"><h2 class="heading">выйти</h2></a>
+					{% else %} <!-- иначе -->
+						<a href="accounts/login/"><h2 class="heading">Авторизация</h2></a>
+					{% endif %}
 <!--		<div class="content">-->
 <!--			<form method="get" action="#">-->
 <!--				<div>-->
