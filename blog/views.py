@@ -21,14 +21,15 @@ class PostListView(View):
         чтобы слаг категории внутри объекта поста совпадал со слагом с маршрута юрл"""
         """Два подчеркивания это обращение"""
         #category_list = Category.objects.all() # полный список категорий
-        template = 'blog/post_list.html' # шаблон по умолчанию
+        tags = Tag.objects.all()
+        template = 'blog/index.html' # шаблон по умолчанию
         if category_slug is not None: # если в запрос пришло название категории
             posts = self.get_queryset().filter(category__slug=category_slug, category__published=True)# сортировка по категориям
         elif slug is not None: # если в запрос пришло название тэга
             posts = self.get_queryset().filter(tags__slug=slug)  # сортировка по тегам
         # else: # если ничего не пришло
         #     posts = self.get_queryset()  # полный список статей
-        return render(request, template, {"posts": posts })
+        return render(request, template, {"posts": posts, "tags" : tags })
 
 
 
@@ -40,9 +41,13 @@ class PostDetailView(View):
         #category_list = Category.objects.all()
         category_list = Category.objects.filter(published=True)
         post = get_object_or_404(Post, slug=kwargs.get("slug"))
+        tags = Tag.objects.all()
         form = CommentForm()
         return render(request, post.template,
-                      {"categories": category_list, "post": post, "form": form}
+                      {"categories": category_list,
+                       "post": post,
+                       "form": form,
+                       "tags": tags}
         )
         # post = get_object_or_404(Post, slug=kwargs.get("slug")) # вернуть 404 если страницы не совпадают
         # comment = Comment.objects.filter(post_id=post.id) # комменты привязанные к этой статье
