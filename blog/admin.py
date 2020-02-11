@@ -13,9 +13,9 @@ from .post_admin import PostAdmin
 from .category_admin import CategoryAdmin
 
 
+from .comment_admin import CommentAdmin
 
 
-admin.site.register(Comment)
 admin.site.register(Tag)
 
 

@@ -126,7 +126,7 @@ class Comment(models.Model):
     )
     text = models.TextField(verbose_name='текст комментария')
     created_date = models.DateField('дата создания', auto_now=True)
-    moderation = models.BooleanField(default=True)
+    moderation = models.BooleanField(default=False)
     author = models.ForeignKey(User, verbose_name='автор', on_delete=models.CASCADE)
 
     def __str__(self):

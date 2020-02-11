@@ -92,17 +92,14 @@
                                 <hr>
                                 <h6>комментарии</h6>
                                 <div class="comments-read d-flex justify-content-end">
-<!--                                    <div class="row">-->
-<!--                                        <div class="col-3">-->
-<!--                                            -->
-<!--                                        </div>-->
-<!--                                    </div>-->
                                     {% for comment in post.comments.all %}
-                                        <div class="comment-read-main">
-                                           <h6>{{ comment.author }}</h6>
-                                            <hr>
-                                            <p>{{ comment.text }}</p>
-                                        </div>
+                                        {% if comment.moderation %}
+                                            <div class="comment-read-main">
+                                               <h6>{{ comment.author }}</h6>
+                                                <hr>
+                                                <p>{{ comment.text }}</p>
+                                            </div>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>
@@ -118,9 +115,8 @@
                                     <form action="" method="post"> <!-- осуществляем привязку коммента к опр статье -->
                                         {% csrf_token %} <!-- токен без которго джанго не примит запрос пост -->
                                         <div class="form-group">
-                                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            <textarea name="text" class="form-control" required id="id_text" rows="3"></textarea>
                                         </div>
-<!--                                        {{ form }}-->
                                         <button type="submit" class="btn btn-warning">Отправить комментарий</button>
 						            </form>
 					            {% else %} <!-- иначе -->
@@ -133,20 +129,6 @@
             </div>
         </div>
     </div>
-
-
-<!--    футер нижняя часть сайта-->
-<!--    <div class="footer">-->
-<!--        <div class="container">-->
-<!--            <div class="row">-->
-<!--                <div class="col-lx-12">-->
-<!--                    <div class="footer-main">-->
-<!--                        Copyryght 2020-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
