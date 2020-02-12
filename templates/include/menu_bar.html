@@ -1,0 +1,65 @@
+{% load staticfiles %}    <!-- эта хрень загружает в шаблон статичные файлы джанго-->
+{% load blog_tags %}  <!-- эта хрень загружает template тэги-->
+{% load mptt_tags %}  <!-- Mptt тэги -->
+{% load menu_tags %}  <!-- в приложении меню подгружаем темлейт теги -->
+{% load blog_tags %}  <!-- эта хрень загружает template тэги-->
+<!--    логотип и авторизация-->
+    <header class="logo-authorization">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9">
+                    <div class="logo">
+                        <a href="{% url 'home' %}"><h1>Привет</h1></a>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <ul class="authorization">
+                        {% if user.is_authenticated %} <!-- если юзер авторизован мы покажем форму -->
+                            <li class="menu__item"><a href="#"><i class="fas fa-barcode"></i></i>авторизован</a></li>
+                            <li class="menu__item"><a href="accounts/logout/"><i class="fas fa-archive"></i></i>выйти</a></li>
+                        {% else %} <!-- иначе -->
+                            <li class="menu__item"><a href="http://127.0.0.1:8000/accounts/login/"><i class="fas fa-barcode"></i></i> авторизация</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!--        меню сайта-->
+    <header class="menu-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 ml-auto align-self-center">
+                    <div class="nav">
+                        <ul class="menu d-md-flex justify-content-end">
+                            <li class="menu__item"><a href="{% url 'home' %}"><i class="fas fa-home"></i> главная</a></li>
+                            <li class="menu__item"><a href="#"><i class="fab fa-blogger"></i> блог</a></li>
+                            <div class="dropdown">
+                                <li class="menu__item dropdown-toggle" data-toggle="dropdown"><a href="#"><i class="fas fa-mouse-pointer"></i>
+                                                            категории
+                                                        </a></li>
+                                <div class="dropdown-menu">
+                                    {% for_category_list as categories %} <!-- Этот template tag  -->
+				                    {% for category in categories %}
+                                    <a class="dropdown-item" href="{% url 'category' category.slug %}">{{category.name}}</a>
+    			                    {% endfor %}
+                            </div>
+                            </div>
+                            <div class="dropdown">
+                                <li class="menu__item dropdown-toggle" data-toggle="dropdown"><a href="#"><i class="fas fa-tag"></i>
+                                                            теги
+                                                        </a></li>
+                                <div class="dropdown-menu">
+                                    {% for tag in tags %}
+                                        <a class="dropdown-item" href="{% url 'tag' tag.slug %}">{{ tag.name }}</a>
+                                    {% endfor %}
+                            </div>
+                            </div>
+                            <li class="menu__item"><a href="#"><i class="fas fa-share-square"></i> написать нам</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
