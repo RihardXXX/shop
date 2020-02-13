@@ -5,7 +5,6 @@ from django.http import HttpResponse
 from django.views import View
 from  .models import *
 from .forms import CommentForm
-#from ..feedback.views import get_feedback
 
 """тут описываем логику работы программы при получении запроса"""
 
@@ -27,8 +26,6 @@ class PostListView(View):
             posts = self.get_queryset().filter(category__slug=category_slug, category__published=True)# сортировка по категориям
         elif slug is not None: # если в запрос пришло название тэга
             posts = self.get_queryset().filter(tags__slug=slug)  # сортировка по тегам
-        # else: # если ничего не пришло
-        #     posts = self.get_queryset()  # полный список статей
         return render(request, template, {"posts": posts, "tags" : tags })
 
 

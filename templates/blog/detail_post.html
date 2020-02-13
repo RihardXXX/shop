@@ -11,6 +11,9 @@
                         <div class="article-detail-main">
                             <div class="post">
                                 <h3>{{post.title}}</h3>
+                                {% if post.image %}
+                                    <img src="{{ post.image.url }}" alt="{{ post.image.url }}"/>
+                                {% endif %}
                                 <p>{{post.text}}</p>
 
                                 <h6>автор: {{post.author}}</h6>
@@ -18,15 +21,17 @@
                                 <hr>
                                 <h6>комментарии</h6>
                                 <div class="comments-read d-flex justify-content-end">
-                                    {% for comment in post.comments.all %}
+                                    <div class="row">
+                                        {% for comment in post.comments.all %}
                                         {% if comment.moderation %}
-                                            <div class="comment-read-main">
-                                               <h6>{{ comment.author }}</h6>
-                                                <hr>
-                                                <p>{{ comment.text }}</p>
-                                            </div>
+                                        <div class="col-3 comment-read-main">
+                                            <h6>{{ comment.author }}</h6>
+                                            <hr>
+                                            <p>{{ comment.text }}</p>
+                                        </div>
                                         {% endif %}
-                                    {% endfor %}
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             </div>
                             <div class="tag">
