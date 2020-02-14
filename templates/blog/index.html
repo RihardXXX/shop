@@ -10,7 +10,7 @@
         <div class="container">
 
             <div class="row">
-                {% for post in posts %}
+                {% for post in page_obj %}
                     <div class="col-lx-3">
                         <div class="article_form">
                             <div class="article_main">
@@ -24,4 +24,24 @@
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+
+            <div class="pagination">
+                <div style="color:white; margin-left: 20px;" class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; первая страница</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+                    {% endif %}
+
+                    <span style="color:white; margin-left: 20px;" class="current">
+                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Следующая страница</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">предыдущая страница &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
 {% endblock content %}
