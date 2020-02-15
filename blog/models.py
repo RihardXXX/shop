@@ -89,7 +89,7 @@ class Post(models.Model):
         null=True
     )
     image = models.ImageField(verbose_name="главная фотография", upload_to="post/", null=True, blank=True)
-    template = models.CharField(verbose_name="шаблон", max_length=500, default="blog/post_detail.html")
+    template = models.CharField(verbose_name="шаблон", max_length=500, default="blog/detail_post.html")
     published = models.BooleanField(verbose_name="опубликовать?", default=True)
     viewed = models.PositiveIntegerField(verbose_name="просмотрено", default=0)
     status = models.BooleanField(verbose_name="для зарегистрированных", default=False)
@@ -109,6 +109,8 @@ class Post(models.Model):
 
     def get_category_template(self):
         return self.category.template
+    # def get_all_comments(self):
+    #     pass
 
     class Meta:
         verbose_name = 'новость'
