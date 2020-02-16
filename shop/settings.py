@@ -25,15 +25,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# Секретный ключ для хеширования данных
-SECRET_KEY = '^3p7q%)+jd*0-uv@s%w3f4)2(1hi3oiu*kzb1_^uuhq6qe&(g@'
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Режим распознавания ошибок с распечаткой
-DEBUG = True
+
 
 # Доменный адрес или ip адрес с которого только можно принимать запросы
-ALLOWED_HOSTS = ['127.0.0.1']
+
 
 
 # Application definition
@@ -103,12 +103,7 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 # Настройка подключения к нашей базе данных
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+
 
 
 # Password validation
@@ -152,9 +147,11 @@ STATIC_URL = '/static/'
 """Подключил папку статик для загрузки стилей и фоток с корня проекта"""
 
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+# как называться будет путь к статическим файлам
+
+
+
+
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = '/media/'
@@ -200,3 +197,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+try:
+    from .local_settings import *
+except:
+    from .prod_settings import *
